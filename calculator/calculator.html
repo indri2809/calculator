@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #181518, #4c0b51);
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            background: #5a1d32;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 340px;
+        }
+        .display {
+            width: 100%;
+            height: 70px;
+            text-align: right;
+            font-size: 2em;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 15px;
+            background: #628296;
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        button {
+            padding: 20px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50%;
+            background: #530707;
+            color: white;
+            cursor: pointer;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #4e0840;
+            transform: scale(1.1);
+        }
+        .wide {
+            grid-column: span 2;
+            border-radius: 30px;
+        }
+        .special {
+            background: #161067;
+        }
+        .special:hover {
+            background: #074f0c;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" readonly>
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="special wide">C</button>
+            <button onclick="deleteLast()" class="special">DEL</button>
+            <button onclick="appendOperator('%')">%</button>
+            <button onclick="appendOperator('/')">/</button>
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="appendOperator('*')">*</button>
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="appendOperator('-')">-</button>
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button onclick="appendOperator('+')">+</button>
+            <button onclick="toggleMinus()">+/-</button>
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="appendNumber('.')">.</button>
+            <button onclick="calculateResult()" class="special">=</button>
+            <button onclick="calculateSquareRoot()" class="special wide">√</button>
+        </div>
+    </div>
+    <script>
+        function appendNumber(number) {
+            document.getElementById("display").value += number;
+        }
+        function appendOperator(operator) {
+            document.getElementById("display").value += operator;
+        }
+        function calculateResult() {
+            try {
+                document.getElementById("display").value = eval(document.getElementById("display").value);
+            } catch {
+                document.getElementById("display").value = "Error";
+            }
+        }
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+        }
+        function deleteLast() {
+            let current = document.getElementById("display").value;
+            document.getElementById("display").value = current.slice(0, -1);
+        }
+        function toggleMinus() {
+            let current = document.getElementById("display").value;
+            if (current.startsWith("-")) {
+                document.getElementById("display").value = current.substring(1);
+            } else {
+                document.getElementById("display").value = "-" + current;
+            }
+        }
+        function calculateSquareRoot() {
+            let current = document.getElementById("display").value;
+            if (current >= 0) {
+                document.getElementById("display").value = Math.sqrt(current);
+            } else {
+                document.getElementById("display").value = "Error";
+            }
+        }
+    </script>
+</body>
+</html>
